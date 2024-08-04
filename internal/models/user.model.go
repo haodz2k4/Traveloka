@@ -10,6 +10,6 @@ type Users struct {
 	Phone     string `gorm:"type:varchar(50);not null"`
 	Status    string `gorm:"type:enum('active','inactive');not null"`
 	Deleted   bool   `gorm:"type:boolean;default:false"`
-	createdAt time.Time
-	updatedAt time.Time
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }

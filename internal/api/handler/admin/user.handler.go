@@ -8,12 +8,16 @@ import (
 )
 
 func Index(c *gin.Context) {
-	//query
+	//filter
 	status := c.Query("status")
 	keyword := c.Query("keyword")
 	email := c.Query("email")
 	filter := service.FilterUser{Status: status, Keyword: keyword, Email: email}
-	users, err := service.GetAllUsers(&filter)
+	//end filter
+	sortKey := c.Query("sortKey")
+	sortValue := c.Query("sortValue")
+	sort := service.SortUser{sortKey, sortValue}
+	users, err := service.GetAllUsers(&filter, &sort)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Unable to fetch users"})
 		return
