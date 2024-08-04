@@ -8,7 +8,8 @@ type Users struct {
 	LastName  string `gorm:"type:varchar(50);not null"`
 	Email     string `gorm:"type:varchar(50);unique;not null"`
 	Phone     string `gorm:"type:varchar(50);not null"`
-	status    string `gorm:"type:enum('active','inactive');not null"`
+	Status    string `gorm:"type:enum('active','inactive');not null"`
+	Deleted   bool   `gorm:"type:boolean;default:false"`
 	createdAt time.Time
 	updatedAt time.Time
 }

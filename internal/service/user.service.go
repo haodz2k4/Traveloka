@@ -5,9 +5,29 @@ import (
 	"Traveloka/pkg/config"
 )
 
-func GetAllUsers() ([]models.Users, error) {
+type FilterUser struct {
+	Status  string
+	Keyword string
+	Email   string
+}
+
+func GetAllUsers(filter *FilterUser) ([]models.Users, error) {
+	//Filter
+	db := config.DB
+	//status
+	if filter.Status != "" {
+		db = db.Where("status = ?", filter.Status)
+	}
+	//find
+	if filter.Keyword != "" {
+		db = db.Where("last_name like ? ", "%"+filter.Keyword+"%")
+	}
+	//email
+	if filter.Email != "" {
+		db = db.Where("email like ? ", "%"+filter.Email+"%")
+	}
 	var users []models.Users
-	if err := config.DB.Find(&users).Error; err != nil {
+	if err := db.Find(&users).Error; err != nil {
 		return nil, err
 	}
 	return users, nil
