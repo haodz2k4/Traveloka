@@ -1,6 +1,7 @@
 package service
 
 import (
+	"Traveloka/helper"
 	"Traveloka/internal/models"
 	"Traveloka/pkg/config"
 	"fmt"
@@ -16,7 +17,7 @@ type SortUser struct {
 	SortValue string
 }
 
-func GetAllUsers(filter *FilterUser, sort *SortUser) ([]models.Users, error) {
+func GetAllUsers(filter *FilterUser, sort *SortUser, pgnt *helper.Pagination) ([]models.Users, error) {
 	//Filter
 	db := config.DB
 	//status
@@ -38,7 +39,9 @@ func GetAllUsers(filter *FilterUser, sort *SortUser) ([]models.Users, error) {
 		fmt.Println(string)
 		db = db.Order(string)
 	}
-
+	//pagination
+	db = db.Limit(pgnt.Limit)
+	db = db.Offset(pgnt.Skip)
 	var users []models.Users
 	if err := db.Find(&users).Error; err != nil {
 		return nil, err

@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"Traveloka/helper"
 	"Traveloka/internal/service"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -14,10 +15,17 @@ func Index(c *gin.Context) {
 	email := c.Query("email")
 	filter := service.FilterUser{Status: status, Keyword: keyword, Email: email}
 	//end filter
+
+	//sort
 	sortKey := c.Query("sortKey")
 	sortValue := c.Query("sortValue")
 	sort := service.SortUser{sortKey, sortValue}
-	users, err := service.GetAllUsers(&filter, &sort)
+	//end sort
+
+	//Pagination
+	pgnt := helper.GetPagination(c)
+
+	users, err := service.GetAllUsers(&filter, &sort, pgnt)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Unable to fetch users"})
 		return
