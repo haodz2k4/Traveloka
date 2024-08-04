@@ -10,5 +10,6 @@ func SetupUserRouter(r *gin.RouterGroup) {
 	userRoutes := r.Group("/users")
 	{
 		userRoutes.GET("/", admin.Index)
+		userRoutes.GET("/detail/:id", admin.Detail)
 	}
 }
