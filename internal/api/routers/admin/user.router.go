@@ -11,5 +11,6 @@ func SetupUserRouter(r *gin.RouterGroup) {
 	{
 		userRoutes.GET("/", admin.Index)
 		userRoutes.GET("/detail/:id", admin.Detail)
+		userRoutes.PATCH("/change/status/:id", admin.ChangeStatus)
 	}
 }

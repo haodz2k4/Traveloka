@@ -56,3 +56,16 @@ func GetUserById(id string) (*models.Users, error) {
 	}
 	return &user, nil
 }
+
+func ChangeStatus(id string, status string) (*models.Users, error) {
+	var user models.Users
+	db := config.DB
+
+	if err := db.Where("user_id = ?", id).First(&user).Error; err != nil {
+		return nil, err
+	}
+	if err := db.Model(&user).Update("status", status).Error; err != nil {
+		return nil, err
+	}
+	return &user, nil
+}

@@ -2,6 +2,7 @@ package admin
 
 import (
 	"Traveloka/helper"
+	"Traveloka/internal/models"
 	"Traveloka/internal/service"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -42,4 +43,21 @@ func Detail(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"user": user})
+}
+
+func ChangeStatus(c *gin.Context) {
+	var inp models.Users
+	id := c.Param("id")
+
+	if err := c.BindJSON(&inp); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	user, err := service.ChangeStatus(id, inp.Status)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"user": user})
+
 }
