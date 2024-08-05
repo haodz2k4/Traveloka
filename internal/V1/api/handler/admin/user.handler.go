@@ -109,3 +109,26 @@ func EditUser(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"user": record})
 }
+
+func ChangeMulti(c *gin.Context) {
+	types := c.Param("type")
+	fmt.Println(types)
+	var ids []string
+	err := c.BindJSON(&ids)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	switch types {
+	case "delete":
+		errDb := service.ChangeMultiDelete(ids)
+		if errDb != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": errDb.Error()})
+			return
+		}
+	default:
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Invalid type"})
+
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "change multi complete"})
+}

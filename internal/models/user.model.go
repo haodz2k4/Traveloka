@@ -1,15 +1,17 @@
 package models
 
-import "time"
+import (
+	"time"
+)
 
 type Users struct {
-	UserId    string `gorm:"primary_key;type:char(4)"`
-	FirstName string `gorm:"type:varchar(50);not null"`
-	LastName  string `gorm:"type:varchar(50);not null"`
-	Email     string `gorm:"type:varchar(50);unique;not null"`
-	Phone     string `gorm:"type:varchar(50);not null"`
-	Status    string `gorm:"type:enum('active','inactive');not null"`
-	Deleted   bool   `gorm:"type:boolean;default:false"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	UserID    string    `gorm:"primaryKey;type:char(4);not null" json:"user_id"`
+	FirstName string    `gorm:"type:varchar(50);not null" json:"first_name"`
+	LastName  string    `gorm:"type:varchar(50);not null" json:"last_name"`
+	Email     string    `gorm:"type:varchar(50);unique;not null" json:"email"`
+	Phone     string    `gorm:"type:varchar(50);not null" json:"phone"`
+	Status    string    `gorm:"type:enum('active','inactive');not null" json:"status"`
+	Deleted   bool      `gorm:"type:boolean;default:false" json:"deleted"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }
