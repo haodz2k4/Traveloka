@@ -103,3 +103,16 @@ func Restore(id string) (*models.Users, error) {
 	}
 	return &user, nil
 }
+
+func DeletePermantely(id string) error {
+	var user models.Users
+	db := config.DB
+	result := db.Where("user_id = ? AND deleted = ?", id, true).Delete(&user)
+	if result.Error != nil {
+		return result.Error
+	}
+	if result.RowsAffected == 0 {
+		return errors.New("Người dùng này chưa bị xóa mềm hoặc đã bị xóa vĩnh viễn")
+	}
+	return nil
+}

@@ -14,5 +14,6 @@ func SetupUserRouter(r *gin.RouterGroup) {
 		userRoutes.PATCH("/change/status/:id", admin.ChangeStatus)
 		userRoutes.PATCH("/delete/soft/:id", admin.SoftDelete)
 		userRoutes.PATCH("/delete/restore/:id", admin.Restore)
+		userRoutes.DELETE("/delete/permantely/:id", admin.DeletePermantely)
 	}
 }

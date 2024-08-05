@@ -82,3 +82,13 @@ func Restore(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"user": user})
 }
+
+func DeletePermantely(c *gin.Context) {
+	id := c.Param("id")
+	err := service.DeletePermantely(id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "delete successfull"})
+}
