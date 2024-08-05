@@ -87,3 +87,19 @@ func SoftDelete(id string) (*models.Users, error) {
 	}
 	return &user, nil
 }
+
+func Restore(id string) (*models.Users, error) {
+	var user models.Users
+	db := config.DB
+	result := db.Model(&user).Where("user_id = ?", id).Update("deleted", false)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	if result.RowsAffected == 0 {
+		return nil, errors.New("Không dòng nào bị ảnh hưởng")
+	}
+	if err := db.Where("user_id = ?", id).First(&user).Error; err != nil {
+		return nil, err
+	}
+	return &user, nil
+}
