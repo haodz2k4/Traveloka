@@ -92,3 +92,19 @@ func DeletePermantely(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"message": "delete successfull"})
 }
+
+func EditUser(c *gin.Context) {
+	id := c.Param("id")
+	var user models.Users
+	if err := c.BindJSON(&user); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	record, err := service.EditUserById(id, user)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"user": record})
+}

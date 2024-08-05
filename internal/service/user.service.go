@@ -116,3 +116,22 @@ func DeletePermantely(id string) error {
 	}
 	return nil
 }
+
+func EditUserById(id string, body models.Users) (*models.Users, error) {
+
+	var user models.Users
+	db := config.DB
+
+	result := db.Model(&user).Where("user_id = ? AND deleted = ?", id, false).Updates(body)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	if result.RowsAffected == 0 {
+		return nil, errors.New("Không dong nào được cập nhật")
+	}
+	if err := db.Where("user_id = ?", id).First(&user).Error; err != nil {
+		return nil, err
+	}
+	return &user, nil
+
+}
