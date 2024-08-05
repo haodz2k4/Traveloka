@@ -1,7 +1,7 @@
 package main
 
 import (
-	"Traveloka/internal/api/routers/admin"
+	"Traveloka/internal/V1/api/routers/admin"
 	"Traveloka/pkg/config"
 	"github.com/gin-gonic/gin"
 	"log"
@@ -15,6 +15,6 @@ func main() {
 	}
 
 	r := gin.Default()
-	admin.SetupAdminRouter(r.Group("/"))
+	admin.SetupAdminRouter(r.Group("/api/v1"))
 	r.Run()
 }

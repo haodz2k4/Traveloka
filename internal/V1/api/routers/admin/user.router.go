@@ -1,7 +1,7 @@
 package admin
 
 import (
-	"Traveloka/internal/api/handler/admin"
+	"Traveloka/internal/V1/api/handler/admin"
 	"github.com/gin-gonic/gin"
 )
 

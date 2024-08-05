@@ -135,3 +135,18 @@ func EditUserById(id string, body models.Users) (*models.Users, error) {
 	return &user, nil
 
 }
+
+func ChangeMultiDelete(ids []string) error {
+
+	var user models.Users
+	db := config.DB
+	result := db.Model(&user).Where("user_id IN ?", ids).Update("deleted", true)
+	if result.Error != nil {
+		return result.Error
+	}
+	if result.RowsAffected == 0 {
+		return errors.New("Không có dòng nào được cập nhật")
+	}
+
+	return nil
+}

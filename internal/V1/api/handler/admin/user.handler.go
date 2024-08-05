@@ -2,13 +2,14 @@ package admin
 
 import (
 	"Traveloka/helper"
+	"Traveloka/internal/V1/service"
 	"Traveloka/internal/models"
-	"Traveloka/internal/service"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
+// [GET] "/admin/delete"
 func Index(c *gin.Context) {
 	//filter
 	status := c.Query("status")
